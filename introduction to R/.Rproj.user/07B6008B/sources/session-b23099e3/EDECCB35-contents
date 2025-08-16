@@ -1,0 +1,61 @@
+library(readxl)
+library(ggplot2)
+library(ggalluvial)
+library(dplyr)
+# Install if not already installed
+#install.packages("collapsibleTree")
+
+library(collapsibleTree)
+
+library(readxl)
+mathare_1 <- read_excel("~/Documents/mathare.xlsx")
+dim(mathare_1)
+colnames(mathare_1)
+
+library(collapsibleTree)
+
+# Example dataset
+mathare <- data.frame(
+  Level1 = "Total Facility workload= 2416",
+  Level2 = "Screened for R. conditions=2332(98%)",
+  Level3 = "Total with R. Conditions + High Risk=298",
+  Level4 = "Total screened with CXR=298",
+  Level5 = c(
+    "Suggestive TB=78", "Suggestive TB=78",
+    "Abnormal CXR Other=68", "Abnormal CXR Other=68",
+    "Abnormal CXR Other=68", "Abnormal CXR Other=68",
+    "Lung Nodules=2", "Normal CXR=150"
+  ),
+  Level6 = c(
+    "MTB Positive=10(13.1%)", "MTB Negative=66",
+    "Spirometer Done=68", "Spirometer Done=68",
+    "Spirometer Done=68", "Spirometer Done=68", 
+    NA, NA
+  ),
+  Level7 = c(
+    NA, NA,
+    "Normal Spirometry=21", "Restrictive=18",
+    "Obstructive=27", "Obstructive=27", "Obstructive=27", "Obstructive=27", "Mixed=2",
+    NA,NA
+  ),
+  Level8 = c(
+    NA, NA,
+    NA, NA,
+    "Asthma=13", "COPD=4", "PTLD=5", "Other=5",
+    NA, NA,
+    NA
+  ),
+  stringsAsFactors = FALSE
+)
+
+# Create collapsible tree
+collapsibleTree(
+  mathare,
+  hierarchy = c("Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8"),
+  root = "Mathare Data",
+  width = 900,
+  height = 800
+)
+
+
+

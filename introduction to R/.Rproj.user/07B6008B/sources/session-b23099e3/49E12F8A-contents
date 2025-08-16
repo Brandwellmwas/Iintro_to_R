@@ -1,0 +1,137 @@
+---
+title: "Lung_Health_casacade"
+output: powerpoint_presentation
+date: "2025-08-11"
+---
+library(readxl)
+library(ggplot2)
+library(ggalluvial)
+library(dplyr)
+# Install if not already installed
+#install.packages("collapsibleTree")
+
+library(collapsibleTree)
+
+ library(readxl)
+mathare <- read_excel("~/Documents/mathare.xlsx")
+
+# Create the data frame for the cascade structure
+mathare_data <- data.frame(
+  Level1 = c(
+    "Total Facility workload-2416",
+    "Total Facility workload-2416",
+    "Total Facility workload-2416",
+    "Total Facility workload-2416",
+    "Total Facility workload-2416",
+    "Total Facility workload-2416",
+    "Total Facility workload-2416",
+    "Total Facility workload-2416",
+    "Total Facility workload-2416",
+    "Total Facility workload-2416",
+    "Total Facility workload-2416"
+  ),
+  Level2 = c(
+    "Screened for R. conditions-2325(97%)",
+    "Screened for R. conditions-2325(97%)",
+    "Screened for R. conditions-2325(97%)",
+    "Screened for R. conditions-2325(97%)",
+    "Screened for R. conditions-2325(97%)",
+    "Screened for R. conditions-2325(97%)",
+    "Screened for R. conditions-2325(97%)",
+    "Screened for R. conditions-2325(97%)",
+    "Screened for R. conditions-2325(97%)",
+    "Screened for R. conditions-2325(97%)",
+    "Screened for R. conditions-2325(97%)"
+  ),
+  Level3 = c(
+    "Total with R. Conditions + High Risk-298",
+    "Total with R. Conditions + High Risk-298",
+    "Total with R. Conditions + High Risk-298",
+    "Total with R. Conditions + High Risk-298",
+    "Total with R. Conditions + High Risk-298",
+    "Total with R. Conditions + High Risk-298",
+    "Total with R. Conditions + High Risk-298",
+    "Total with R. Conditions + High Risk-298",
+    "Total with R. Conditions + High Risk-298",
+    "Total with R. Conditions + High Risk-298",
+    "Total with R. Conditions + High Risk-298"
+  ),
+  Level4 = c(
+    "Total screened with CXR-298(100%)",
+    "Total screened with CXR-298(100%)",
+    "Total screened with CXR-298(100%)",
+    "Total screened with CXR-298(100%)",
+    "Total screened with CXR-298(100%)",
+    "Total screened with CXR-298(100%)",
+    "Total screened with CXR-298(100%)",
+    "Total screened with CXR-298(100%)",
+    "Total screened with CXR-298(100%)",
+    "Total screened with CXR-298(100%)",
+    "Total screened with CXR-298(100%)"
+  ),
+  Level5 = c(
+    "Suggestive TB-78",
+    "Suggestive TB-78",
+    "Abnormal CXR Other-68",
+    "Abnormal CXR Other-68",
+    "Abnormal CXR Other-68",
+    "Abnormal CXR Other-68",
+    "Abnormal CXR Other-68",
+    "Abnormal CXR Other-68",
+    "Abnormal CXR Other-68",
+    "Lung Nodules-2",
+    "Normal-150"
+    
+  ),
+  Level6 = c(
+    "mWRD_Microscopy investigation-76(98%)", 
+    "mWRD_Microscopy investigation-76(98%)",
+    "Spirometer Done-68",
+    "Spirometer Done-68",
+    "Spirometer Done-68",
+    "Spirometer Done-68",
+    "Spirometer Done-68",
+    "Spirometer Done-68",
+    "Spirometer Done-68",
+    NA,
+    NA
+   
+  ),
+  Level7 = c(
+    "MTB Pos-10(13.1%)", 
+    "MTB Neg-66",
+    "Normal Spirometry-21",
+    "Restrictive-18",
+    "Obstructive-27",
+    "Obstructive-27",
+    "Obstructive-27",
+    "Obstructive-27",
+    "Mixed-2",
+    NA,
+    NA
+  ),
+  Level8 = c(
+    NA,
+    "CD-4",
+    NA,
+    NA,
+    "Asthma-13",
+    "COPD-4",
+    "PTLD-5",
+    "Othe-5",
+    NA,
+    NA,
+    NA
+    
+  )
+)
+
+# Create the collapsible tree
+collapsibleTree(
+  mathare_data,
+  hierarchy = c("Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8"),
+  root = "Mathare Data Cascade",
+  width = 1500,
+  height = 1000
+)
+```

@@ -1,0 +1,77 @@
+library(readxl)
+library(collapsibleTree)
+
+# Your numbers
+numbers <- list(
+  Total_Facility_workload = 2416,
+  Screened_for_R_Conditions = 2332,
+  Total_with_R_Conditions_High_Risk = 298,
+  Total_screened_with_CXR = 298,
+  Suggestive_TB = 78,
+  Abnormal_CXR_other = 68,
+  Lung_Nodules = 2,
+  Normal_CXR = 150,
+  Total_Investigated = 76,   # (not used explicitly here)
+  MTB_Pos = 10,
+  MTB_Neg = 66,
+  Clinical = 4,
+  Spirometer_Done = 68,
+  Normal_Spirometry = 21,
+  Restrictive = 18,
+  Obstructive = 27,
+  Mixed = 2,
+  Asthma = 13,
+  COPD = 4,
+  PTLD = 5,
+  Other = 6
+)
+
+# Create the data frame with numbers embedded in labels
+mathare_data <- data.frame(
+  Level1 = rep(paste0("Total Facility workload = ", numbers$Total_Facility_workload), 11),
+  Level2 = rep(paste0("Screened for R. conditions = ", numbers$Screened_for_R_Conditions), 11),
+  Level3 = rep(paste0("Total with R. Conditions + High Risk = ", numbers$Total_with_R_Conditions_High_Risk), 11),
+  Level4 = rep(paste0("Total screened with CXR = ", numbers$Total_screened_with_CXR), 11),
+  Level5 = c(
+    rep(paste0("Suggestive TB = ", numbers$Suggestive_TB), 2),
+    rep(paste0("Abnormal CXR Other = ", numbers$Abnormal_CXR_other), 7),
+    paste0("Lung Nodules = ", numbers$Lung_Nodules),
+    paste0("Normal CXR = ", numbers$Normal_CXR)
+  ),
+  Level6 = c(
+    rep("mWRD_Microscopy investigation", 2),
+    rep(paste0("Spirometer Done = ", numbers$Spirometer_Done), 7),
+    NA, NA
+  ),
+  Level7 = c(
+    "MTB Positive = 10 (13.1%)",
+    paste0("MTB Negative = ", numbers$MTB_Neg, " (Clinical ", numbers$Clinical, ")"),
+    paste0("Normal Spirometry = ", numbers$Normal_Spirometry),
+    paste0("Restrictive = ", numbers$Restrictive),
+    rep(paste0("Obstructive = ", numbers$Obstructive), 4),
+    paste0("Mixed = ", numbers$Mixed),
+    NA, NA
+  ),
+  Level8 = c(
+    NA,
+    "CD = 4",
+    NA, NA,
+    paste0("Asthma = ", numbers$Asthma),
+    paste0("COPD = ", numbers$COPD),
+    paste0("PTLD = ", numbers$PTLD),
+    paste0("Other = ", numbers$Other),
+    NA,
+    NA
+  ),
+  stringsAsFactors = FALSE
+)
+
+# Create collapsible tree with numbers
+collapsibleTree(
+  mathare_data,
+  hierarchy = c("Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8"),
+  root = "Mathare Data Cascade",
+  width = 900,
+  height = 700
+)
+

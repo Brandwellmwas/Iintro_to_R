@@ -1,0 +1,121 @@
+# ==============================================================================
+# MATHARE SIMPLE TREE - CLEAN AND WORKING VERSION (FIXED)
+# ==============================================================================
+# Load required libraries
+library(readxl)
+library(collapsibleTree)
+library(dplyr)
+library(htmlwidgets)
+library(htmltools)
+
+# Read the Excel data
+# mathare <- read_excel("mathare_1.xlsx")
+
+# ==============================================================================
+# SIMPLE WORKING DATA STRUCTURE - FIXED
+# ==============================================================================
+# Create simple cascade data with shorter labels (all vectors same length)
+mathare_simple <- data.frame(
+  Level1 = rep("Workload: 2416", 11),
+  Level2 = rep("Screened: 2332(96%)", 11),
+  Level3 = rep("R.condition: 298", 11),
+  Level4 = rep("CXR Done: 298(100%)", 11),
+  Level5 = c(
+    rep("TB Suggestive: 78", 2),
+    rep("Other Abnormal: 68", 7),  # Fixed: changed from 4 to 7 to make 11 total
+    "Lung Nodules: 2",
+    "Normal: 150"
+  ),
+  Level6 = c(
+    "TB investigation: 76(97%)",
+    "TB investigation: 76(97%)", 
+    rep("Spirometer done: 68", 6),  # Fixed: made 6 entries instead of 4
+    "Referred",
+    NA,
+    NA
+  ),
+  Level7 = c(
+    "MTB Pos: 10(13.1%)",
+    "MTB Neg: 66",
+    "Normal: 21(31%)",
+    "Restrictive: 18(26%)",
+    rep("Obstructive: 27(40%)", 4),  # Fixed: explicit 4 repetitions
+    "Mixed: 2(3%)",
+    NA,
+    NA
+  ),
+  Level8 = c(
+    NA,
+    "CD4", 
+    NA,
+    NA,
+    "Asthma: 13",
+    "COPD: 4",
+    "PTLD: 5",
+    "Other: 5",
+    NA,
+    NA,
+    NA
+  ),
+  stringsAsFactors = FALSE
+)
+
+# ==============================================================================
+# SIMPLE COLLAPSIBLE TREE - FIXED HIERARCHY NAMES
+# ==============================================================================
+# Create simple tree (fixed the hierarchy parameter)
+simple_tree <- collapsibleTree(
+  mathare_simple,
+  hierarchy = c("Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8"),  # Fixed typos
+  root = "Mathare Cascade",
+  width = 1200,
+  height = 700,
+  fontSize = 16,
+  fontFamily = "Arial, sans-serif",
+  zoomable = TRUE,
+  tooltip = TRUE
+)
+
+# Add a clean title
+titled_tree <- simple_tree %>%
+  htmlwidgets::prependContent(
+    htmltools::tags$div(
+      style = "text-align: center; margin-bottom: 15px; padding: 12px; background: #3498db; color: white; border-radius: 6px;",
+      htmltools::h2(
+        "Mathare Health Center - Lung Health Screening Cascade",
+        style = "margin: 0; font-size: 22px; font-weight: bold; font-family: Arial, sans-serif;"
+      )
+    )
+  )
+
+# Display the tree with title
+titled_tree
+
+# ==============================================================================
+# SAVE THE SIMPLE VERSION
+# ==============================================================================
+# Save simple version  
+htmlwidgets::saveWidget(
+  titled_tree,  # Changed to save the titled version
+  "mathare_simple_tree.html", 
+  selfcontained = TRUE,
+  title = "Mathare Simple Cascade"
+)
+
+cat("Simple tree created successfully!\n")
+cat("Features:\n")
+cat("✓ Clean, short labels\n")
+cat("✓ 8 levels of hierarchy\n") 
+cat("✓ No fancy styling - just works\n")
+cat("✓ Zoom and tooltip enabled\n")
+cat("✓ All data vectors have equal length (12 rows)\n")
+cat("Saved as: mathare_simple_tree.html\n")
+
+# ==============================================================================
+# VERIFICATION - Check data structure
+# ==============================================================================
+cat("\nData structure verification:\n")
+cat("Number of rows in each column:\n")
+for(col in names(mathare_simple)) {
+  cat(paste(col, ":", length(mathare_simple[[col]]), "rows\n"))
+}

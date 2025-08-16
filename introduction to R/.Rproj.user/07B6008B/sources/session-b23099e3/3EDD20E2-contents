@@ -1,0 +1,161 @@
+---
+title: "Learning R Class 3"
+author: "Brandwell Mwangi"
+date: "9-08-2025"
+output:
+word_document:
+number_sections: true
+editor_options:
+markdown:
+wrap: 72
+
+#bibliography: Senegal_SCH.bib
+#link-citations: true
+---
+1. signs 
+-equal sign (==)
+-Not equal to (!=)
+-greater than(>)
+-less than(<)
+-greater than or equal to(>=)
+-less than or equal to (<=)
+
+
+2. Operators 
+AND (&)
+OR(|)
+
+
+3. R if
+-they are commonly used in if statements 
+- if statement is used to specify a block of code to be executed if a condition is TRUE
+- {} are used to define the scope of a code or function, depending on what you are writing 
+
+
+```{r}
+a <- 30
+b <- 220
+if (b> a){ 
+  print ("b is greater than a")
+  }
+```
+
+4. else if_ you are telling R if the previous conditions were not met or were not true, then you are telling R to try these other conditions 
+
+```{r}
+a <- 30
+b <- 30
+if (b> a){
+  print ("b is greater than a")
+} else if (a==b){
+  print ("b is equal to a")
+}
+```
+
+5. If....else - captures anything not captured by if ....and else if
+- if...else can work without else if
+```{r}
+a <- 300
+b <- 220
+
+if (b> a){
+  print ("b is greater than a")
+} else if (a==b){
+  print ("b is equal to a")
+} else {
+  print ("b is less than a ")
+}
+```
+
+6. AND and OR operators- they are logical operators and are used to combine conditional statements 
+```{r}
+a <- 30
+b <- 220
+c <- 400
+if(b> a & c> a){
+  print ("both conditios are TRUE")
+}
+```
+ OR
+ 
+```{r}
+a <- 30
+b <- 220
+c <- 400
+if(b< a | c> a){
+  print ("either conditios are TRUE")
+}
+```
+ 7. While loop- excutes a statement as longs as the conditions is TRUE
+ - print i as long as i <6
+```{r}
+i <- 1
+while(i< 6){
+  print (i)
+  i<- i+1
+}
+```
+ 
+- we can combine while loop with if--else function
+-print play a game football ifthe player number is 6
+
+```{r}
+player <- 1
+while (player<= 6) {
+  if (player <6){
+    print ("No football")
+  } else {
+    print ("play football")
+  }
+  player <- player+1
+}
+```
+& For Loop- used to perform iteration
+```{r}
+for(x in 1:10){
+  print(x)
+}
+```
+
+- nest a if ..else wihyj a for loop
+
+```{r}
+dice<- 1:10
+for(x in dice){
+  if (x==6){
+   print(paste("The dice is ", x, "football")) 
+  }
+  else {
+    print(paste("The dice is ", x, "not football")) 
+  }
+}
+```
+
+9. Functions - a function is a block of code that only runs when you call it
+- we specify the parameter ( data)
+-use function() to create 
+
+```{r}
+my_function <- function(){
+  print ("Hello")
+}
+my_function()
+```
+- function that have argumnet
+ -when calling a function; specify the same number argumnets as supplied
+ 
+```{r}
+my_function <- function(fname, mname, lname){
+  paste (fname,mname, lname)
+}
+my_function("Brandwell","Muiru", "Mwangi")
+```
+ 
+ -installing and using R packages 
+ - for installation you need internet
+ install. packages("")
+```{r}
+#install.packages("tidyverse")
+#library(tidyverse)
+```
+ 

@@ -1,0 +1,8 @@
+"0","my_function <- function(fname, mname, lname){"
+"0","  paste (fname,mname, lname)"
+"0","}"
+"0","my_function(""Brandwell"",""Muiru"", ""Mwangi"")"
+"1","[1]"
+"1"," ""Brandwell Muiru Mwangi"""
+"1","
+"

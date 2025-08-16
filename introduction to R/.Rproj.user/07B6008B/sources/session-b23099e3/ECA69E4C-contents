@@ -1,0 +1,161 @@
+library(readxl)
+library(ggplot2)
+library(ggalluvial)
+library(dplyr)
+library(collapsibleTree)
+
+# Read the data
+mathare <- read_excel("~/Documents/mathare.xlsx")
+
+# Create the complete data frame for the cascade structure
+mathare_data <- data.frame(
+  Level1 = c(
+    # Screened branch
+    rep("Total Facility workload-2416", 11),
+    # Not screened branch
+    rep("Total Facility workload-2416", 1)
+  ),
+  Level2 = c(
+    # Screened for R. conditions (2325 out of 2416)
+    rep("Screened for R. conditions-2325(96%)", 11),
+    # Not screened for R. conditions (91 out of 2416)
+    "Not screened for R. conditions-91(4%)"
+  ),
+  Level3 = c(
+    # With R. conditions + High Risk (298 out of 2325)
+    rep("Total with R. Conditions + High Risk-298(13%)", 11),
+    # Without R. conditions (2027 out of 2325) - adding this branch
+    # rep("No R. Conditions-2027(87%)", 1),
+    # Not screened - no further breakdown
+    NA
+  ),
+  Level4 = c(
+    # All 298 with R. conditions got CXR
+    rep("Total screened with CXR-298(100%)", 11),
+    # No R. conditions - no CXR needed
+    # NA,
+    # Not screened - no CXR
+    NA
+  ),
+  Level5 = c(
+    "Suggestive TB-78",
+    "Suggestive TB-78",
+    "Abnormal CXR Other-68",
+    "Abnormal CXR Other-68",
+    "Abnormal CXR Other-68",
+    "Abnormal CXR Other-68",
+    "Abnormal CXR Other-68",
+    "Abnormal CXR Other-68",
+    "Abnormal CXR Other-68",
+    "Lung Nodules-2",
+    "Normal-150",
+    # NA,
+    NA
+  ),
+  Level6 = c(
+    "mWRD_Microscopy investigation-76(97%)", 
+    "mWRD_Microscopy investigation-76(97%)",
+    "Spirometer Done-68(100%)",
+    "Spirometer Done-68(100%)",
+    "Spirometer Done-68(100%)",
+    "Spirometer Done-68(100%)",
+    "Spirometer Done-68(100%)",
+    "Spirometer Done-68(100%)",
+    "Spirometer Done-68(100%)",
+    "Follow-up recommended-2",
+    NA,
+    # NA,
+    NA
+  ),
+  Level7 = c(
+    "MTB Pos-10(13%)", 
+    "MTB Neg-66(87%)",
+    "Normal Spirometry-21(31%)",
+    "Restrictive-18(26%)",
+    "Obstructive-27(40%)",
+    "Obstructive-27(40%)",
+    "Obstructive-27(40%)",
+    "Obstructive-27(40%)",
+    "Mixed-2(3%)",
+    NA,
+    NA,
+    # NA,
+    NA
+  ),
+  Level8 = c(
+    NA,
+    "CD-4",
+    "No intervention needed-21",
+    "Pulmonary rehabilitation-18",
+    "Asthma-13",
+    "COPD-4",
+    "PTLD-5",
+    "Other respiratory conditions-5",
+    "Combined therapy-2",
+    NA,
+    NA,
+    # NA,
+    NA
+  )
+)
+
+# Add the "No R. Conditions" branch separately
+no_r_conditions_data <- data.frame(
+  Level1 = "Total Facility workload-2416",
+  Level2 = "Screened for R. conditions-2325(96%)",
+  Level3 = "No R. Conditions-2027(87%)",
+  Level4 = "Routine care continued-2027",
+  Level5 = "Regular follow-up scheduled-2027",
+  Level6 = NA,
+  Level7 = NA,
+  Level8 = NA
+)
+
+# Combine both datasets
+complete_mathare_data <- rbind(mathare_data, no_r_conditions_data)
+
+# Create the collapsible tree
+collapsibleTree(
+  complete_mathare_data,
+  hierarchy = c("Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8"),
+  root = "Mathare Complete Healthcare Cascade",
+  width = 3500,
+  height = 800,
+  nodeSize = "leafCount"
+)
+
+# Alternative: Create a summary table for better understanding
+cascade_summary <- data.frame(
+  Stage = c(
+    "Total Facility Workload",
+    "Screened for R. Conditions", 
+    "Not Screened",
+    "With R. Conditions + High Risk",
+    "Without R. Conditions",
+    "Received CXR",
+    "TB Suggestive",
+    "Other Abnormal CXR", 
+    "Normal CXR",
+    "Lung Nodules",
+    "TB Positive",
+    "TB Negative"
+  ),
+  Count = c(2416, 2325, 91, 298, 2027, 298, 78, 68, 150, 2, 10, 66),
+  Percentage_of_Previous = c(
+    100, 
+    round(2325/2416*100, 1), 
+    round(91/2416*100, 1),
+    round(298/2325*100, 1), 
+    round(2027/2325*100, 1),
+    round(298/298*100, 1),
+    round(78/298*100, 1), 
+    round(68/298*100, 1),
+    round(150/298*100, 1), 
+    round(2/298*100, 1),
+    round(10/78*100, 1), 
+    round(66/78*100, 1)
+  )
+)
+
+print("Cascade Summary:")
+print(cascade_summary)

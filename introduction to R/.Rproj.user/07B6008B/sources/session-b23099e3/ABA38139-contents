@@ -1,0 +1,144 @@
+---
+title: "HF cascade"
+output: html_document
+date: "2025-08-11"
+---
+```{r}
+library(readxl)
+library(ggplot2)
+library(ggalluvial)
+library(dplyr)
+# Install if not already installed
+#install.packages("collapsibleTree")
+
+library(collapsibleTree)
+
+ library(readxl)
+mathare <- read_excel("~/Documents/mathare.xlsx")
+
+# Create the data frame for the cascade structure
+mathare_data <- data.frame(
+  Level1 = c(
+    "Total Facility workload",
+    "Total Facility workload",
+    "Total Facility workload",
+    "Total Facility workload",
+    "Total Facility workload",
+    "Total Facility workload",
+    "Total Facility workload",
+    "Total Facility workload",
+    "Total Facility workload",
+    "Total Facility workload",
+    "Total Facility workload"
+  ),
+  Level2 = c(
+    "Screened for R. conditions",
+    "Screened for R. conditions",
+    "Screened for R. conditions",
+    "Screened for R. conditions",
+    "Screened for R. conditions",
+    "Screened for R. conditions",
+    "Screened for R. conditions",
+    "Screened for R. conditions",
+    "Screened for R. conditions",
+    "Screened for R. conditions",
+    "Screened for R. conditions"
+  ),
+  Level3 = c(
+    "Total with R. Conditions + High Risk",
+    "Total with R. Conditions + High Risk",
+    "Total with R. Conditions + High Risk",
+    "Total with R. Conditions + High Risk",
+    "Total with R. Conditions + High Risk",
+    "Total with R. Conditions + High Risk",
+    "Total with R. Conditions + High Risk",
+    "Total with R. Conditions + High Risk",
+    "Total with R. Conditions + High Risk",
+    "Total with R. Conditions + High Risk",
+    "Total with R. Conditions + High Risk"
+  ),
+  Level4 = c(
+    "Total screened with CXR",
+    "Total screened with CXR",
+    "Total screened with CXR",
+    "Total screened with CXR",
+    "Total screened with CXR",
+    "Total screened with CXR",
+    "Total screened with CXR",
+    "Total screened with CXR",
+    "Total screened with CXR",
+    "Total screened with CXR",
+    "Total screened with CXR"
+  ),
+  Level5 = c(
+    "Suggestive TB",
+    "Suggestive TB",
+    "Abnormal CXR Other",
+    "Abnormal CXR Other",
+    "Abnormal CXR Other",
+    "Abnormal CXR Other",
+    "Abnormal CXR Other",
+    "Abnormal CXR Other",
+    "Abnormal CXR Other",
+    "Lung Nodules",
+    "Normal"
+    
+  ),
+  Level6 = c(
+    "mWRD_Microscopy investigation", 
+    "mWRD_Microscopy investigation",
+    "Spirometer Done",
+    "Spirometer Done",
+    "Spirometer Done",
+    "Spirometer Done",
+    "Spirometer Done",
+    "Spirometer Done",
+    "Spirometer Done",
+    NA,
+    NA
+   
+  ),
+  Level7 = c(
+    "MTB Pos", 
+    "MTB Neg",
+    "Normal Spirometry",
+    "Restrictive",
+    "Obstructive",
+    "Obstructive",
+    "Obstructive",
+    "Obstructive",
+    "Mixed",
+    NA,
+    NA
+  ),
+  Level8 = c(
+    NA,
+    "CD(4)",
+    NA,
+    NA,
+    "Asthma",
+    "COPD",
+    "PTLD",
+    "Other",
+    NA,
+    NA,
+    NA
+    
+  )
+)
+
+# Create the collapsible tree
+collapsibleTree(
+  mathare_data,
+  hierarchy = c("Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8"),
+  root = "Mathare Data Cascade",
+  width = 900,
+  height = 700
+)
+```
+
+```
+
+```
+
+#
